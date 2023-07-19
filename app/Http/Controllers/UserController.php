@@ -38,42 +38,36 @@ class UserController extends Controller
         return $user;
     }
 
-    public function ValidateToken(Request $request){
-        //return auth('api')->user();
-        return redirect()->intended('/inicio');
-    }
-
-    public function Logout(Request $request){
-        $request->user()->token()->revoke();
-        return ['message' => 'Token Revoked'];
+ 
+  public function ValidateToken(Request $request){
         
-        
+        return auth('api')->user();
+       
     }
 
 
- public function login(Request $request)
-{
-    
-    $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required']
-    ]);
 
 
-    if (Auth::attempt($credentials)) {  
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-        $user = Auth::user();     
-        $accessToken = $user->createToken('Authorization')->accessToken;
-     
-       
-        return response()->json([
-            //'user' => $user,
-            'access_token' => $accessToken
-        ], 200);
-    } else {
-       
-        return response()->json(['error' => 'Credenciales inválidas'], 401);
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('AuthToken')->accessToken;
+            $authorizationHeader = 'Bearer ' . $token;
+
+            return response()->json([
+                 'message' => 'Logged in successfully!',
+                'Authorization' => $authorizationHeader,
+               
+                
+            ]);
+          
+            
+        }
+
+        return response()->json(['message' => 'Invalid credentials'], 401);
     }
 
-}
 }
