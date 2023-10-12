@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 
 
+
 class UserController extends Controller
 {
     public function Register(Request $request){
@@ -19,7 +20,7 @@ class UserController extends Controller
         $validation = Validator::make($request->all(),[
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'required'
         ]);
 
         if($validation->fails())
@@ -46,7 +47,7 @@ class UserController extends Controller
     }
 
 
-
+    
 
     public function login(Request $request)
     {
@@ -69,5 +70,16 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Invalid credentials'], 401);
     }
+
+    public function Logout(Request $request){
+
+    Auth::logout();
+    return response()->json(['message' => 'Logout successful']);
+        
+    }
+
+
+
+
 
 }
