@@ -5,29 +5,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Lcobucci\JWT\Parser;
+use App\Models\Empleados;
+use App\Models\Session;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Usuarios;
+use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\EmpleadosController;
 
 
 
-class UsuariosController extends Controller
+
+class EmpleadosController extends Controller
 
 {
- 
-    
+
+
     public function loginAlmacen(Request $request)
     {
-        $nombre = $request->input('nombre');
+        $email = $request->input('email');
         $contraseña = $request->input('contraseña');
     
-        
-        $user = Usuarios::where('nombre', $nombre)->first();
-    
-        if ($user) {
-           
-            if ($user->es_almacen == 1) {
-              
-                if (password_verify($contraseña, $user->contraseña)) {                
+        //guardarSesion($email);
+        $user = Empleados::where('email', $email)->first(); 
+      
+        if ($user) {           
+            if ($user->op_almacen == 1) {              
+                if (password_verify($contraseña, $user->contraseña)) {                             
                      
                     return response()->json(['message' => 'Ingreso correcto'], 200);
                 } else {
@@ -42,19 +44,21 @@ class UsuariosController extends Controller
           
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
+
+       
     }
     
     public function loginChofer(Request $request)
     {
-        $nombre = $request->input('nombre');
+        $email = $request->input('email');
         $contraseña = $request->input('contraseña');
     
         
-        $user = Usuarios::where('nombre', $nombre)->first();
+        $user = Empleados::where('email', $email)->first();
     
         if ($user) {
            
-            if ($user->es_chofer == 1) {
+            if ($user->op_chofer == 1) {
               
                 if (password_verify($contraseña, $user->contraseña)) {                
                      
@@ -82,3 +86,4 @@ class UsuariosController extends Controller
         
     }
 }
+

@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 
-class Usuarios extends Model
+class Empleados extends Model
 {
     use HasFactory;
-    protected $table = 'usuarios';    
-    protected $fillable = ['id_empleado','nombre', 'contraseña', 'es_almacen', 'es_chofer']; 
+    protected $table = 'empleados';  
     use SoftDeletes;
 }
