@@ -24,7 +24,7 @@ class EmpleadosController extends Controller
         $email = $request->input('email');
         $contraseña = $request->input('contraseña');
     
-        //guardarSesion($email);
+       
         $user = Empleados::where('email', $email)->first(); 
       
         if ($user) {           
@@ -82,7 +82,7 @@ class EmpleadosController extends Controller
     public function Logout(Request $request){
 
     Auth::logout();
-    return response()->json(['message' => 'Logout successful']);
+    return response()->json(['message' => 'Deslogueo Correcto']);
         
     }
 }

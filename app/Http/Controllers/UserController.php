@@ -59,7 +59,7 @@ class UserController extends Controller
             $authorizationHeader = 'Bearer ' . $token;
 
             return response()->json([
-                 'message' => 'Logged in successfully!',
+                 'message' => 'Login correcto!',
                 'Authorization' => $authorizationHeader,
                
                 
@@ -68,13 +68,13 @@ class UserController extends Controller
             
         }
 
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return response()->json(['message' => 'Credenciales inválidas'], 401);
     }
 
     public function Logout(Request $request){
 
     Auth::logout();
-    return response()->json(['message' => 'Logout successful']);
+    return response()->json(['message' => 'Deslogueo correcto']);
         
     }
 
